@@ -181,6 +181,7 @@ m4_require([_LT_FILEUTILS_DEFAULTS])dnl
 m4_require([_LT_CHECK_SHELL_FEATURES])dnl
 m4_require([_LT_PATH_CONVERSION_FUNCTIONS])dnl
 m4_require([_LT_CMD_RELOAD])dnl
+m4_require([_LT_DECL_FILECMD])
 m4_require([_LT_CHECK_MAGIC_METHOD])dnl
 m4_require([_LT_CHECK_SHAREDLIB_FROM_LINKLIB])dnl
 m4_require([_LT_CMD_OLD_ARCHIVE])dnl
@@ -1292,7 +1293,7 @@ ia64-*-hpux*)
   # options accordingly.
   echo 'int i;' > conftest.$ac_ext
   if AC_TRY_EVAL(ac_compile); then
-    case `/usr/bin/file conftest.$ac_objext` in
+    case `$FILECMD conftest.$ac_objext` in
       *ELF-32*)
 	HPUX_IA64_MODE=32
 	;;
@@ -1309,7 +1310,7 @@ ia64-*-hpux*)
   echo '[#]line '$LINENO' "configure"' > conftest.$ac_ext
   if AC_TRY_EVAL(ac_compile); then
     if test yes = "$lt_cv_prog_gnu_ld"; then
-      case `/usr/bin/file conftest.$ac_objext` in
+      case `$FILECMD conftest.$ac_objext` in
 	*32-bit*)
 	  LD="${LD-ld} -melf32bsmip"
 	  ;;
@@ -1321,7 +1322,7 @@ ia64-*-hpux*)
 	;;
       esac
     else
-      case `/usr/bin/file conftest.$ac_objext` in
+      case `$FILECMD conftest.$ac_objext` in
 	*32-bit*)
 	  LD="${LD-ld} -32"
 	  ;;
@@ -1343,7 +1344,7 @@ mips64*-*linux*)
   echo '[#]line '$LINENO' "configure"' > conftest.$ac_ext
   if AC_TRY_EVAL(ac_compile); then
     emul=elf
-    case `/usr/bin/file conftest.$ac_objext` in
+    case `$FILECMD conftest.$ac_objext` in
       *32-bit*)
 	emul="${emul}32"
 	;;
@@ -1351,7 +1352,7 @@ mips64*-*linux*)
 	emul="${emul}64"
 	;;
     esac
-    case `/usr/bin/file conftest.$ac_objext` in
+    case `$FILECMD conftest.$ac_objext` in
       *MSB*)
 	emul="${emul}btsmip"
 	;;
@@ -1359,7 +1360,7 @@ mips64*-*linux*)
 	emul="${emul}ltsmip"
 	;;
     esac
-    case `/usr/bin/file conftest.$ac_objext` in
+    case `$FILECMD conftest.$ac_objext` in
       *N32*)
 	emul="${emul}n32"
 	;;
@@ -1379,14 +1380,14 @@ s390*-*linux*|s390*-*tpf*|sparc*-*linux*)
   # not appear in the list.
   echo 'int i;' > conftest.$ac_ext
   if AC_TRY_EVAL(ac_compile); then
-    case `/usr/bin/file conftest.o` in
+    case `$FILECMD conftest.o` in
       *32-bit*)
 	case $host in
 	  x86_64-*kfreebsd*-gnu)
 	    LD="${LD-ld} -m elf_i386_fbsd"
 	    ;;
 	  x86_64-*linux*)
-	    case `/usr/bin/file conftest.o` in
+	    case `$FILECMD conftest.o` in
 	      *x86-64*)
 		LD="${LD-ld} -m elf32_x86_64"
 		;;
@@ -1454,7 +1455,7 @@ s390*-*linux*|s390*-*tpf*|sparc*-*linux*)
   # options accordingly.
   echo 'int i;' > conftest.$ac_ext
   if AC_TRY_EVAL(ac_compile); then
-    case `/usr/bin/file conftest.o` in
+    case `$FILECMD conftest.o` in
     *64-bit*)
       case $lt_cv_prog_gnu_ld in
       yes*)
@@ -3476,7 +3477,7 @@ beos*)
 
 bsdi[[45]]*)
   lt_cv_deplibs_check_method='file_magic ELF [[0-9]][[0-9]]*-bit [[ML]]SB (shared object|dynamic lib)'
-  lt_cv_file_magic_cmd='/usr/bin/file -L'
+  lt_cv_file_magic_cmd='$FILECMD -L'
   lt_cv_file_magic_test_file=/shlib/libc.so
   ;;
 
@@ -8213,6 +8214,15 @@ test -z "$DLLTOOL" && DLLTOOL=dlltool
 _LT_DECL([], [DLLTOOL], [1], [DLL creation program])
 AC_SUBST([DLLTOOL])
 ])
+
+# _LT_DECL_FILECMD
+# -----------------
+# Check for a file(cmd) program that can be used to detect file type
+# and magic.
+m4_defun([_LT_DECL_FILECMD],
+[AC_CHECK_TOOL([FILECMD], [file], [:])
+_LT_DECL([], [FILECMD], [1], [A file(cmd) program that detects file types])
+])# _LT_DECL_FILECMD
 
 # _LT_DECL_SED
 # ------------
