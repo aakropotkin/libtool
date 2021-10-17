@@ -1,0 +1,52 @@
+#! /usr/bin/env sh
+# -*- mode: shell; sh-shell: sh; -*-
+# ============================================================================ #
+
+M4_TEMPLATE=/data/repos/libtool/build-aux/m4-template.m4;
+MODULE='';
+FUNC='';
+
+if ! test -f ${M4_TEMPLATE}; then
+  echo "Could not find template file at ${M4_TEMPLATE}" >&2;
+  exit 1;
+fi
+
+
+if test ${#} -gt 1; then
+  MODULE="${1}";
+  shift;
+fi
+
+if test ${#} -gt 1; then
+  FUNC="${1}";
+  shift;
+fi
+
+while test -z "${MODULE}"; do
+  read -p "Module name: " MODULE;
+  MODULE="$( echo ${MODULE}|tr 'a-z-' 'A-Z_'|sed -e 's/^ *//' -e 's/ *$//'; )";
+  if test -z "${MODULE}"; then
+    echo "Stop fucking around and give a good module name!" >&2;
+  fi
+done
+
+if test -z "${FUNC}"; then
+  read -p "Function name ( optional ): " FUNC;
+  if test -n "${FUNC}"; then
+    FUNC="$( echo ${FUNC}|tr 'a-z-' 'A-Z_'|sed -e 's/^ *//' -e 's/ *$//'; )";
+  fi
+fi
+
+if test -n "${FUNC}"; then
+  cat ${M4_TEMPLATE}|sed -e "s/@MODULE@/${MODULE}/g" -e "s/@FUNC@/${FUNC}/g";
+else
+  cat ${M4_TEMPLATE}|sed "s/@MODULE@/${MODULE}/g";
+fi
+
+
+# ---------------------------------------------------------------------------- #
+
+
+
+# ============================================================================ #
+# vim: set filetype=sh :

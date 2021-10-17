@@ -1,4 +1,4 @@
-# mode: autoconf; -*-
+# -*- mode: autoconf; -*-
 # ============================================================================ #
 #
 #
@@ -6,7 +6,7 @@
 
 # _LTM_IO_FN_ECHO
 # ---------------
-m4_define([_LTM_IO_FN_ECHO],
+m4_defun([_LTM_IO_FN_ECHO],
 [
 # func_echo ARG...
 # ----------------
@@ -33,7 +33,7 @@ func_echo ()
 
 # _LTM_IO_FN_WARNING
 # ------------------
-m4_define([_LTM_IO_FN_WARNING],
+m4_defun([_LTM_IO_FN_WARNING],
 [
 # func_warning ARG...
 # -------------------
@@ -52,7 +52,7 @@ func_warning ()
 
 # _LTM_IO_USAGE_PREPARE
 # ---------------------
-m4_define([_LTM_IO_USAGE_PREPARE],
+m4_defun([_LTM_IO_USAGE_PREPARE],
 [
 ## ---------------- ##
 ## Options parsing. ##
@@ -86,7 +86,7 @@ usage_message="Options:
 
 # _LTM_IO_FN_HELP
 # ---------------
-m4_define([_LTM_IO_FN_HELP],
+m4_defun([_LTM_IO_FN_HELP],
 [
 # Additional text appended to 'usage_message' in response to '--help'.
 func_help ()
@@ -134,7 +134,7 @@ General help using GNU software: <http://www.gnu.org/gethelp/>."
 
 # _LTM_IO_FN_FATAL_CONFIG
 # -----------------------
-m4_define([_LTM_IO_FN_FATAL_CONFIG],
+m4_defun([_LTM_IO_FN_FATAL_CONFIG],
 [
 # func_fatal_configuration ARG...
 # -------------------------------
@@ -153,7 +153,7 @@ func_fatal_configuration ()
 
 # _LTM_IO_FN_CONFIG
 # -----------------
-m4_define([_LTM_IO_FN_CONFIG],
+m4_defun([_LTM_IO_FN_CONFIG],
 [
 # func_config
 # -----------
@@ -179,7 +179,7 @@ func_config ()
 # ---------------------------------------------------------------------------- #
 
 # _LTM_IO_FN_FEATURES
-m4_define([_LTM_IO_FN_FEATURES],
+m4_defun([_LTM_IO_FN_FEATURES],
 [
 # func_features
 # -------------
@@ -205,16 +205,34 @@ func_features ()
 
 # ---------------------------------------------------------------------------- #
 
+# _LTM_IO_FN_FALLBACK_ECHO
+# ------------------------
+m4_defun([_LTM_IO_FN_FALLBACK_ECHO],
+[
+# A function that is used when there is no print builtin or printf.
+func_fallback_echo ()
+{
+  eval 'cat <<_LTECHO_EOF
+$1
+_LTECHO_EOF'
+}
+])# _LTM_IO_FN_FALLBACK_ECHO
+
+
+# ---------------------------------------------------------------------------- #
+
 # LTM_IO_INIT
 # -----------
-m4_define([LTM_IO_INIT],
-[_LTM_IO_FN_ECHO
-_LTM_IO_FN_WARNING
-_LTM_IO_USAGE_PREPARE
-_LTM_IO_FN_HELP
-_LTM_IO_FN_FATAL_CONFIG
-_LTM_IO_FN_CONFIG
-_LTM_IO_FN_FEATURES
+m4_defun_once([LTM_IO_INIT],
+[m4_require([_LTM_IO_FN_ECHO])
+m4_require([_LTM_IO_FN_WARNING])
+m4_require([_LTM_IO_USAGE_PREPARE])
+m4_require([_LTM_IO_FN_HELP])
+m4_require([_LTM_IO_FN_FATAL_CONFIG])
+m4_require([_LTM_IO_FN_CONFIG])
+m4_require([_LTM_IO_FN_FEATURES])
+m4_require([_LTM_IO_FN_FALLBACK_ECHO])
+m4_pattern_forbid([^_LTM_IO_])
 ])# LTM_IO_INIT
 
 
