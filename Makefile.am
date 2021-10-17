@@ -162,7 +162,7 @@ $(ltmain_in): $(ltmain_m4dir)/ltm~opts.m4
 $(ltmain_in): $(ltmain_m4dir)/ltm~files.m4
 $(ltmain_in): $(ltmain_m4dir)/ltm~tags.m4
 $(ltmain_in): $(ltmain_in_m4)
-	test -f $(ltmain_in_m4) && mv -f $(ltmain_in_m4) $(ltmain_in_m4)~
+	test -f $@ && mv -f $@ $@~
 	$(AUTOM4TE) -l m4sugar -I$(ltmain_m4dir) $(ltmain_in_m4) > $@
 
 

@@ -60,10 +60,8 @@ func_warning ()
 # LTM_IO_FN_WARNING(ARGS)
 m4_defun_init([LTM_IO_FN_WARNING],
 [func_warning $1],
-[{
-  m4_require([_LTM_IO_FN_WARNING])
-  func_warning $1
-}
+[m4_require([_LTM_IO_FN_WARNING])
+func_warning $1
 ])# LTM_IO_FN_WARNING
 
 
@@ -153,10 +151,8 @@ General help using GNU software: <http://www.gnu.org/gethelp/>."
 # --------------
 m4_defun_init([LTM_IO_FN_HELP],
 [func_help],
-[{
-  m4_require([_LTM_IO_FN_HELP_PREPARE])
-  func_help
-}
+[m4_require([_LTM_IO_FN_HELP_PREPARE])
+func_help
 ])# LTM_IO_FN_HELP
 
 
@@ -183,10 +179,8 @@ func_fatal_configuration ()
 # ----------------------------
 m4_defun_init([_LTM_IO_FN_FATAL_CONFIG],
 [func_fatal_configuration $1],
-[{
-  m4_require([_LTM_IO_FN_FATAL_CONFIG_PREPARE])
-  func_fatal_configuration $1
-}
+[m4_require([_LTM_IO_FN_FATAL_CONFIG_PREPARE])
+func_fatal_configuration $1
 ]) # LTM_IO_FN_FATAL_CONFIG
 
 
@@ -212,7 +206,7 @@ func_config ()
     $SED -n "/$re_begincf TAG CONFIG: $tagname\$/,/$re_endcf TAG CONFIG: $tagname\$/p" < "$progpath"
   done
 
-  exit $?
+  exit $[]?
 }
 ])# _LTM_IO_FN_CONFIG_PREPARE
 
@@ -221,10 +215,8 @@ func_config ()
 # ----------------
 m4_defun_init([LTM_IO_FN_CONFIG],
 [func_config],
-[{
-  m4_require([_LTM_IO_FN_CONFIG_PREPARE])
-  func_config
-}
+[m4_require([_LTM_IO_FN_CONFIG_PREPARE])
+func_config
 ])# LTM_IO_FN_CONFIG
 
 
@@ -251,7 +243,7 @@ func_features ()
     echo "disable static libraries"
   fi
 
-  exit $?
+  exit $[]?
 }
 ])# _LTM_IO_FN_FEATURES_PREPARE
 
@@ -259,10 +251,8 @@ func_features ()
 # LTM_IO_FN_FEATURES
 m4_defun_init([LTM_IO_FN_FEATURES],
 [func_features],
-[{
-  m4_require([_LTM_IO_FN_FEATURES_PREPARE])
-  func_features
-}
+[m4_require([_LTM_IO_FN_FEATURES_PREPARE])
+func_features
 ])# LTM_IO_FN_FEATURES
 
 
@@ -286,10 +276,8 @@ _LTECHO_EOF'
 # --------------------------------
 m4_defun_init([LTM_IO_FN_FALLBACK_ECHO],
 [func_fallback_echo $1],
-[{
-  m4_require([_LMT_IO_FN_FALLBACK_ECHO_PREPARE])
-  func_fallback_echo $1
-}
+[m4_require([_LMT_IO_FN_FALLBACK_ECHO_PREPARE])
+func_fallback_echo $1
 ])# LTM_IO_FN_FALLBACK_ECHO
 
 

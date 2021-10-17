@@ -70,10 +70,8 @@ libtool_options_prep ()
 # --------------------------------
 m4_defun_init([LTM_OPTS_FN_OPTIONS_PREP],
 [libtool_options_prep $1],
-[{
-  m4_require([_LTM_OPTS_FN_OPTIONS_PEREP_PREPARE])
-  libtool_options_prep $1
-}
+[m4_require([_LTM_OPTS_FN_OPTIONS_PEREP_PREPARE])
+libtool_options_prep $1
 ])# LTM_OPTS_FN_OPTIONS_PREP
 
 
@@ -192,10 +190,8 @@ libtool_parse_options ()
 # ---------------------------------
 m4_defun_init([LTM_OPTS_FN_PARSE_OPTIONS],
 [libtool_parse_options $1],
-[{
-  m4_require([_LTM_OPTS_FN_PARSE_OPTIONS_PREPARE])
-  libtool_parse_options $1
-}
+[m4_require([_LTM_OPTS_FN_PARSE_OPTIONS_PREPARE])
+libtool_parse_options $1
 ])# LTM_OPTS_FN_PARSE_OPTIONS
 
 
@@ -267,10 +263,8 @@ libtool_validate_options ()
 # ------------------------------------
 m4_defun_init([LTM_OPTS_FN_VALIDATE_OPTIONS],
 [libtool_validate_options $1],
-[{
-  m4_require([_LTM_OPTS_FN_VALIDATE_OPTIONS_PREPARE])
-  libtool_validate_options $1
-}
+[m4_require([_LTM_OPTS_FN_VALIDATE_OPTIONS_PREPARE])
+libtool_validate_options $1
 ])# LTM_OPTS_FN_VALIDATE_OPTIONS
 
 

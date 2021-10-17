@@ -56,10 +56,8 @@ func_enable_tag ()
 # -------------------------------
 m4_defun_init([LTM_TAGS_FN_ENABLE_TAG],
 [func_enable_tag $1],
-[{
-  m4_require([_LTM_TAGS_FN_ENABLE_TAG_PREPARE])
-  func_enable_tag $1
-}
+[m4_require([_LTM_TAGS_FN_ENABLE_TAG_PREPARE])
+func_enable_tag $1
 ])# LTM_TAGS_FN_ENABLE_TAG(TAGNAME)
 
 
