@@ -66,7 +66,7 @@ m4_defun_init([LTM_TAGS_FN_ENABLE_TAG],
 # ---------------------------------------------------------------------------- #
 
 # LTM_TAGS_INIT
-# -----------
+# -------------
 m4_defun_once([LTM_TAGS_INIT],
 [m4_require([_LTM_TAGS_FN_ENABLE_TAG_PREPARE])
 m4_pattern_forbid([^_LTM_TAGS_])
