@@ -1,0 +1,11 @@
+#! /usr/bin/env sh
+
+if test -f build-aux/ltmain.in; then
+  mv build-aux/ltmain.in build-aux/ltmain.in~;
+fi
+
+autom4te                  \
+  -l m4sugar              \
+  -Im4/ltmain-parts       \
+  build-aux/ltmain.in.m4  \
+  > build-aux/ltmain.in;
