@@ -50,10 +50,9 @@ _LT_EOF
 # ------------------------------
 m4_defun_init([LTM_VER_FN_CHECK_VERSION_MATCH],
 [func_check_version_match],
-[{
-  m4_require([_LTM_VER_FN_CHECK_VERSION_MATCH_PREPARE])
-  func_check_version_match
-}])# LTM_VER_FN_CHECK_VERSION_MATCH
+[m4_require([_LTM_VER_FN_CHECK_VERSION_MATCH_PREPARE])
+func_check_version_match
+])# LTM_VER_FN_CHECK_VERSION_MATCH
 
 
 # ---------------------------------------------------------------------------- #
