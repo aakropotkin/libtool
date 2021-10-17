@@ -12,6 +12,7 @@ m4_include([ltm~io.m4])
 m4_include([ltm~version.m4])
 m4_include([ltm~opts.m4])
 m4_include([ltm~files.m4])
+m4_include([ltm~tags.m4])
 m4_divert_push([])dnl
 #! /usr/bin/env sh
 
@@ -82,58 +83,12 @@ package_revision=@package_revision@
 # Set a version string.
 scriptversion='(GNU @PACKAGE@) @VERSION@'
 
-dnl Provide several print functions such as `func_help'
+dnl Define helper functions
 LTM_IO_INIT
-
-dnl Get file handling helpers
 LTM_FS_INIT
-
-# func_enable_tag TAGNAME
-# -----------------------
-# Verify that TAGNAME is valid, and either flag an error and exit, or
-# enable the TAGNAME tag.  We also add TAGNAME to the global $taglist
-# variable here.
-func_enable_tag ()
-{
-    # Global variable:
-    tagname=$1
-
-    re_begincf="^# ### BEGIN LIBTOOL TAG CONFIG: $tagname\$"
-    re_endcf="^# ### END LIBTOOL TAG CONFIG: $tagname\$"
-    sed_extractcf=/$re_begincf/,/$re_endcf/p
-
-    # Validate tagname.
-    case $tagname in
-      *[!-_A-Za-z0-9,/]*)
-        func_fatal_error "invalid tag name: $tagname"
-        ;;
-    esac
-
-    # Don't test for the "default" C tag, as we know it's
-    # there but not specially marked.
-    case $tagname in
-        CC) ;;
-    *)
-        if $GREP "$re_begincf" "$progpath" >/dev/null 2>&1; then
-	  taglist="$taglist $tagname"
-
-	  # Evaluate the configuration.  Be careful to quote the path
-	  # and the sed script, to avoid splitting on whitespace, but
-	  # also don't use non-portable quotes within backquotes within
-	  # quotes we have to do it in 2 steps:
-	  extractedcf=`$SED -n -e "$sed_extractcf" < "$progpath"`
-	  eval "$extractedcf"
-        else
-	  func_error "ignoring unknown tag $tagname"
-        fi
-        ;;
-    esac
-}
-
-dnl Version helpers
+LTM_TAGS_INIT
 LTM_VER_INIT
-
-dnl Define Option parsing helpers, then trigger option parsing.
+dnl Define option parsing helpers, and trigger processing of options
 LTM_PROCESS_OPTS
 
 
