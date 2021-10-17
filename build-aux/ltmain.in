@@ -11,6 +11,7 @@ m4_init
 m4_include([ltm~io.m4])
 m4_include([ltm~version.m4])
 m4_include([ltm~opts.m4])
+m4_include([ltm~files.m4])
 m4_divert_push([])dnl
 #! /usr/bin/env sh
 
@@ -84,45 +85,8 @@ scriptversion='(GNU @PACKAGE@) @VERSION@'
 dnl Provide several print functions such as `func_help'
 LTM_IO_INIT
 
-
-# func_lo2o OBJECT-NAME
-# ---------------------
-# Transform OBJECT-NAME from a '.lo' suffix to the platform specific
-# object suffix.
-
-lo2o=s/\\.lo\$/.$objext/
-o2lo=s/\\.$objext\$/.lo/
-
-if test yes = "$_G_HAVE_XSI_OPS"; then
-  eval 'func_lo2o ()
-  {
-    case $1 in
-      *.lo) func_lo2o_result=${1%.lo}.$objext ;;
-      *   ) func_lo2o_result=$1               ;;
-    esac
-  }'
-
-  # func_xform LIBOBJ-OR-SOURCE
-  # ---------------------------
-  # Transform LIBOBJ-OR-SOURCE from a '.o' or '.c' (or otherwise)
-  # suffix to a '.lo' libtool-object suffix.
-  eval 'func_xform ()
-  {
-    func_xform_result=${1%.*}.lo
-  }'
-else
-  # ...otherwise fall back to using sed.
-  func_lo2o ()
-  {
-    func_lo2o_result=`$ECHO "$1" | $SED "$lo2o"`
-  }
-
-  func_xform ()
-  {
-    func_xform_result=`$ECHO "$1" | $SED 's|\.[^.]*$|.lo|'`
-  }
-fi
-
+dnl Get file handling helpers
+LTM_FS_INIT
 
 # func_enable_tag TAGNAME
 # -----------------------
