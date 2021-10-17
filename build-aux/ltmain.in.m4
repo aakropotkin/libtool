@@ -77,8 +77,8 @@ package_revision=@package_revision@
 # Much of our low-level functionality needs to be sourced from external
 # libraries, which are installed to $pkgauxdir.
 
-. `echo "$0" |${SED-sed} 's|[^/]*$||'`"funclib.sh"
-. `echo "$0" |${SED-sed} 's|[^/]*$||'`"options-parser"
+. `echo "$0" |${SED-sed} 's|[[^/]]*$||'`"funclib.sh"
+. `echo "$0" |${SED-sed} 's|[[^/]]*$||'`"options-parser"
 
 # Set a version string.
 scriptversion='(GNU @PACKAGE@) @VERSION@'
@@ -114,7 +114,7 @@ exec_cmd=
 # determined imposters.
 func_ltwrapper_script_p ()
 {
-    test -f "$1" &&
+    test -f "$1" &&  \
       $lt_truncate_bin < "$1" 2>/dev/null | func_generated_by_libtool_p
 }
 
