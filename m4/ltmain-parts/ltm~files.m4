@@ -18,9 +18,9 @@ o2lo=s/\\.$objext\$/.lo/
 if test yes = "$_G_HAVE_XSI_OPS"; then
   eval 'func_lo2o ()
   {
-    case $1 in
+    case $[]1 in
       *.lo) func_lo2o_result=${1%.lo}.$objext ;;
-      *   ) func_lo2o_result=$1               ;;
+      *   ) func_lo2o_result=$[]1               ;;
     esac
   }'
 else
