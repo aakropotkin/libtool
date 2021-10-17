@@ -4,9 +4,9 @@
 #
 # ---------------------------------------------------------------------------- #
 
-# _LTM_IO_FN_ECHO
-# ---------------
-m4_defun([_LTM_IO_FN_ECHO],
+# _LTM_IO_FN_ECHO_PREPARE
+# -----------------------
+m4_defun_once([_LTM_IO_FN_ECHO_PREPARE],
 [
 # func_echo ARG...
 # ----------------
@@ -16,7 +16,7 @@ func_echo ()
 {
   $debug_cmd
 
-  _G_message=$*
+  _G_message=$[]*
 
   func_echo_IFS=$IFS
   IFS=$nl
@@ -26,14 +26,23 @@ func_echo ()
   done
   IFS=$func_echo_IFS
 }
-])# _LTM_IO_FN_ECHO
+])# _LTM_IO_FN_ECHO_PREPARE
+
+
+# LTM_IO_FN_ECHO_PREPARE(ARGS)
+m4_defun_init([LTM_IO_FN_ECHO_PREPARE],
+[func_echo $1],
+[{
+  m4_require([_LTM_IO_FN_ECHO_PREPARE])
+  func_echo $1
+}])# LTM_IO_FN_ECHO_PREPARE
 
 
 # ---------------------------------------------------------------------------- #
 
-# _LTM_IO_FN_WARNING
-# ------------------
-m4_defun([_LTM_IO_FN_WARNING],
+# _LTM_IO_FN_WARNING_PREPARE
+# --------------------------
+m4_defun_once([_LTM_IO_FN_WARNING_PREPARE],
 [
 # func_warning ARG...
 # -------------------
@@ -43,16 +52,26 @@ func_warning ()
 {
   $debug_cmd
 
-  $warning_func ${1+"$@"}
+  $warning_func ${1+"$[]@"}
 }
-])# _LTM_IO_FN_WARNING
+])# _LTM_IO_FN_WARNING_PREPARE
+
+
+# LTM_IO_FN_WARNING(ARGS)
+m4_defun_init([LTM_IO_FN_WARNING],
+[func_warning $1],
+[{
+  m4_require([_LTM_IO_FN_WARNING])
+  func_warning $1
+}
+])# LTM_IO_FN_WARNING
 
 
 # ---------------------------------------------------------------------------- #
 
 # _LTM_IO_USAGE_PREPARE
 # ---------------------
-m4_defun([_LTM_IO_USAGE_PREPARE],
+m4_defun_once([_LTM_IO_USAGE_PREPARE],
 [
 ## ---------------- ##
 ## Options parsing. ##
@@ -84,9 +103,9 @@ usage_message="Options:
 
 # ---------------------------------------------------------------------------- #
 
-# _LTM_IO_FN_HELP
-# ---------------
-m4_defun([_LTM_IO_FN_HELP],
+# _LTM_IO_FN_HELP_PREPARE
+# -----------------------
+m4_defun_once([_LTM_IO_FN_HELP_PREPARE],
 [
 # Additional text appended to 'usage_message' in response to '--help'.
 func_help ()
@@ -127,14 +146,25 @@ GNU @PACKAGE@ home page: <@PACKAGE_URL@>.
 General help using GNU software: <http://www.gnu.org/gethelp/>."
   exit 0
 }
-])# _LTM_IO_FN_HELP
+])# _LTM_IO_FN_HELP_PREPARE
+
+
+# LTM_IO_FN_HELP
+# --------------
+m4_defun_init([LTM_IO_FN_HELP],
+[func_help],
+[{
+  m4_require([_LTM_IO_FN_HELP_PREPARE])
+  func_help
+}
+])# LTM_IO_FN_HELP
 
 
 # ---------------------------------------------------------------------------- #
 
-# _LTM_IO_FN_FATAL_CONFIG
-# -----------------------
-m4_defun([_LTM_IO_FN_FATAL_CONFIG],
+# _LTM_IO_FN_FATAL_CONFIG_PREPARE
+# -------------------------------
+m4_defun_once([_LTM_IO_FN_FATAL_CONFIG_PREPARE],
 [
 # func_fatal_configuration ARG...
 # -------------------------------
@@ -142,18 +172,29 @@ m4_defun([_LTM_IO_FN_FATAL_CONFIG],
 # a configuration failure hint, and exit.
 func_fatal_configuration ()
 {
-  func_fatal_error ${1+"$@"} \
+  func_fatal_error ${1+"$[]@"} \
     "See the $PACKAGE documentation for more information." \
     "Fatal configuration error."
 }
-])# _LTM_IO_FN_FATAL_CONFIG
+])# _LTM_IO_FN_FATAL_CONFIG_PREPARE
+
+
+# LTM_IO_FN_FATAL_CONFIG(ARGS)
+# ----------------------------
+m4_defun_init([_LTM_IO_FN_FATAL_CONFIG],
+[func_fatal_configuration $1],
+[{
+  m4_require([_LTM_IO_FN_FATAL_CONFIG_PREPARE])
+  func_fatal_configuration $1
+}
+]) # LTM_IO_FN_FATAL_CONFIG
 
 
 # ---------------------------------------------------------------------------- #
 
-# _LTM_IO_FN_CONFIG
-# -----------------
-m4_defun([_LTM_IO_FN_CONFIG],
+# _LTM_IO_FN_CONFIG_PREPARE
+# -------------------------
+m4_defun_once([_LTM_IO_FN_CONFIG_PREPARE],
 [
 # func_config
 # -----------
@@ -173,13 +214,25 @@ func_config ()
 
   exit $?
 }
-])# _LTM_IO_FN_CONFIG
+])# _LTM_IO_FN_CONFIG_PREPARE
+
+
+# LTM_IO_FN_CONFIG
+# ----------------
+m4_defun_init([LTM_IO_FN_CONFIG],
+[func_config],
+[{
+  m4_require([_LTM_IO_FN_CONFIG_PREPARE])
+  func_config
+}
+])# LTM_IO_FN_CONFIG
 
 
 # ---------------------------------------------------------------------------- #
 
-# _LTM_IO_FN_FEATURES
-m4_defun([_LTM_IO_FN_FEATURES],
+# _LTM_IO_FN_FEATURES_PREPARE
+# ---------------------------
+m4_defun_once([_LTM_IO_FN_FEATURES_PREPARE],
 [
 # func_features
 # -------------
@@ -200,23 +253,44 @@ func_features ()
 
   exit $?
 }
-])# _LTM_IO_FN_FEATURES
+])# _LTM_IO_FN_FEATURES_PREPARE
+
+
+# LTM_IO_FN_FEATURES
+m4_defun_init([LTM_IO_FN_FEATURES],
+[func_features],
+[{
+  m4_require([_LTM_IO_FN_FEATURES_PREPARE])
+  func_features
+}
+])# LTM_IO_FN_FEATURES
 
 
 # ---------------------------------------------------------------------------- #
 
-# _LTM_IO_FN_FALLBACK_ECHO
-# ------------------------
-m4_defun([_LTM_IO_FN_FALLBACK_ECHO],
+# _LTM_IO_FN_FALLBACK_ECHO_PREPARE
+# --------------------------------
+m4_defun_once([_LTM_IO_FN_FALLBACK_ECHO_PREPARE],
 [
 # A function that is used when there is no print builtin or printf.
 func_fallback_echo ()
 {
   eval 'cat <<_LTECHO_EOF
-$1
+$[]1
 _LTECHO_EOF'
 }
-])# _LTM_IO_FN_FALLBACK_ECHO
+])# _LTM_IO_FN_FALLBACK_ECHO_PREPARE
+
+
+# LTM_IO_FN_FALLBACK_ECHO(MESSAGE)
+# --------------------------------
+m4_defun_init([LTM_IO_FN_FALLBACK_ECHO],
+[func_fallback_echo $1],
+[{
+  m4_require([_LMT_IO_FN_FALLBACK_ECHO_PREPARE])
+  func_fallback_echo $1
+}
+])# LTM_IO_FN_FALLBACK_ECHO
 
 
 # ---------------------------------------------------------------------------- #
@@ -224,14 +298,14 @@ _LTECHO_EOF'
 # LTM_IO_INIT
 # -----------
 m4_defun_once([LTM_IO_INIT],
-[m4_require([_LTM_IO_FN_ECHO])
-m4_require([_LTM_IO_FN_WARNING])
+[m4_require([_LTM_IO_FN_ECHO_PREPARE])
+m4_require([_LTM_IO_FN_WARNING_PREPARE])
 m4_require([_LTM_IO_USAGE_PREPARE])
-m4_require([_LTM_IO_FN_HELP])
-m4_require([_LTM_IO_FN_FATAL_CONFIG])
-m4_require([_LTM_IO_FN_CONFIG])
-m4_require([_LTM_IO_FN_FEATURES])
-m4_require([_LTM_IO_FN_FALLBACK_ECHO])
+m4_require([_LTM_IO_FN_HELP_PREPARE])
+m4_require([_LTM_IO_FN_FATAL_CONFIG_PREPARE])
+m4_require([_LTM_IO_FN_CONFIG_PREPARE])
+m4_require([_LTM_IO_FN_FEATURES_PREPARE])
+m4_require([_LTM_IO_FN_FALLBACK_ECHO_PREPARE])
 m4_pattern_forbid([^_LTM_IO_])
 ])# LTM_IO_INIT
 
