@@ -12,8 +12,8 @@ m4_defun_once([_LTM_FS_FN_FUNC_LO2O_PREPARE],
 # ---------------------
 # Transform OBJECT-NAME from a '.lo' suffix to the platform specific
 # object suffix.
-lo2o=s/\\.lo\$/.$objext/
-o2lo=s/\\.$objext\$/.lo/
+lo2o=s/\\.lo\$[]/.$objext/
+o2lo=s/\\.$objext\$[]/.lo/
 
 if test yes = "$_G_HAVE_XSI_OPS"; then
   eval 'func_lo2o ()
@@ -60,7 +60,7 @@ if test yes = "$_G_HAVE_XSI_OPS"; then
 else
   func_xform ()
   {
-    func_xform_result=`$ECHO "$[]1" | $SED 's|\.[[^.]]*$|.lo|'`
+    func_xform_result=`$ECHO "$[]1" | $SED 's|\.[[^.]]*$[]|.lo|'`
   }
 fi
 ])# _LTM_FS_FN_FUNC_XFORM_PREPARE

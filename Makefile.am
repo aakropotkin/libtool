@@ -92,7 +92,7 @@ options_parser	= $(srcdir)/$(aux_dir)/options-parser
 u2d_copyright	= $(srcdir)/$(aux_dir)/update-copyright
 
 EXTRA_DIST     += $(extract_trace) $(funclib_sh) $(inline_source) \
-		  $(libtoolize_in) $(ltmain_in) $(ltmain_sh) \
+		  $(libtoolize_in) $(ltmain_in_m4) $(ltmain_in) $(ltmain_sh) \
 		  $(ltversion_in) $(ltversion_m4) $(no_bogus_macros) \
 		  $(options_parser) $(u2d_copyright)
 
@@ -162,7 +162,6 @@ $(ltmain_in): $(ltmain_m4dir)/ltm~opts.m4
 $(ltmain_in): $(ltmain_m4dir)/ltm~files.m4
 $(ltmain_in): $(ltmain_m4dir)/ltm~tags.m4
 $(ltmain_in): $(ltmain_in_m4)
-	test -f $@ && mv -f $@ $@~
 	$(AUTOM4TE) -l m4sugar -I$(ltmain_m4dir) $(ltmain_in_m4) > $@
 
 
