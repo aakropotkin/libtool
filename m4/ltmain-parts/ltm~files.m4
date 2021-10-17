@@ -135,6 +135,47 @@ m4_defun_init([LTM_FS_FN_LALIB_P],
 ])# LTM_FS_FN_LALIB_P
 
 
+# ---------------------------------------------------------------------------- #
+
+# _LTM_FS_FN_LALIB_UNSAFE_P_PREPARE
+# ---------------------------------
+m4_defun_once([_LTM_FS_FN_LALIB_UNSAFE_P_PREPARE],
+[
+# func_lalib_unsafe_p file
+# True iff FILE is a libtool '.la' library or '.lo' object file.
+# This function implements the same check as func_lalib_p without
+# resorting to external programs.  To this end, it redirects stdin and
+# closes it afterwards, without saving the original file descriptor.
+# As a safety measure, use it only where a negative result would be
+# fatal anyway.  Works if 'file' does not exist.
+func_lalib_unsafe_p ()
+{
+  lalib_p=no
+  if test -f "$[]1" && test -r "$[]1" && exec 5<&0 <"$[]1"; then
+    for lalib_p_l in 1 2 3 4
+    do
+        read lalib_p_line
+        case $lalib_p_line in
+          \#\ Generated\ by\ *$PACKAGE* ) lalib_p=yes; break;;
+        esac
+    done
+    exec 0<&5 5<&-
+  fi
+  test yes = "$lalib_p"
+}
+])# _LTM_FS_FN_LALIB_UNSAFE_P_PREPARE
+
+
+# LTM_FS_FN_LALIB_UNSAFE_P(FILE)
+# ------------------------------
+m4_defun_init([LTM_FS_FN_LALIB_UNSAFE_P],
+[func_lalib_unsafe_p $1],
+[{
+  m4_require([_LTM_FS_FN_LALIB_UNSAFE_P_PREPARE])
+  func_lalib_unsafe_p $1
+}
+])# LTM_FS_FN_LALIB_UNSAFE_P(FILE)
+
 
 # ---------------------------------------------------------------------------- #
 
@@ -145,6 +186,7 @@ m4_defun_once([LTM_FS_INIT],
 m4_require([_LTM_FS_FN_FUNC_XFORM_PREPARE])
 m4_require([_LTM_FS_FN_GENERATED_BY_LT_P_PREPARE])
 m4_require([_LTM_FS_FN_LALIB_P_PREPARE])
+m4_require([_LTM_FS_FN_LALIB_UNSAFE_P_PREPARE])
 m4_pattern_forbid([^_LTM_FS_])
 ])# LTM_FS_INIT
 

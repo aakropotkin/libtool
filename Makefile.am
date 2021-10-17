@@ -83,6 +83,7 @@ inline_source	= $(srcdir)/$(aux_dir)/inline-source
 libtoolize_in	= $(srcdir)/libtoolize.in
 ltmain_sh	= $(srcdir)/$(aux_dir)/ltmain.sh
 ltmain_in	= $(srcdir)/$(aux_dir)/ltmain.in
+ltmain_in_m4	= $(srcdir)/$(aux_dir)/ltmain.in.m4
 libtool_m4	= $(srcdir)/$(macro_dir)/libtool.m4
 ltversion_in	= $(srcdir)/$(macro_dir)/ltversion.in
 ltversion_m4	= $(srcdir)/$(macro_dir)/ltversion.m4
@@ -152,6 +153,19 @@ $(ltversion_m4): $(ltversion_in) $(dotversion)
 ##           should make this rule depend on Makefile but that will break
 ##           distcheck (at least) by rebuilding ltmain.sh in the source
 ##           tree whenever config.status regenerates the Makefile.
+
+ltmain_m4dir= $(srcdir)/m4/ltmain-parts
+
+$(ltmain_in): $(ltmain_m4dir)/ltm~io.m4
+$(ltmain_in): $(ltmain_m4dir)/ltm~version.m4
+$(ltmain_in): $(ltmain_m4dir)/ltm~opts.m4
+$(ltmain_in): $(ltmain_m4dir)/ltm~files.m4
+$(ltmain_in): $(ltmain_m4dir)/ltm~tags.m4
+$(ltmain_in): $(ltmain_in_m4)
+	test -f $(ltmain_in_m4) && mv -f $(ltmain_in_m4) $(ltmain_in_m4)~
+	$(AUTOM4TE) -l m4sugar -I$(ltmain_m4dir) $(ltmain_in_m4) > $@
+
+
 $(ltmain_sh): $(ltmain_in) $(dotversion)
 	@$(rebuild); \
 	if test -f '$@'; then \
