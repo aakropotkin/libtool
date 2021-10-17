@@ -8800,3 +8800,5 @@ build_old_libs=`case $build_libtool_libs in yes) echo no;; *) echo yes;; esac`
 # sh-indentation:2
 # End:
 m4_divert_pop([])
+m4_pattern_forbid([_LTM_])
+m4_pattern_forbid([LTM_])
