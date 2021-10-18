@@ -1,9 +1,32 @@
 # -*- mode: autoconf; -*-
 # ============================================================================ #
 #
-# Build with :
-#   autom4te -l M4sugar -I${srcdir}/m4/ltmain-parts  \
-#     ${srcdir}/build-aux/ltmain.in;
+# The intention of this effort is to split `ltmain.in' into a collection of
+# bite sized chunks that are easier to maintain.
+# The biggest advantage I see is "readability", since the ~9,000 line
+# `ltmain.in' script is incredibly intimidating for new contributors to
+# begin working their way through.
+#
+# Additionally allowing for processing with `autom4te' will pave the way for
+# improved integration with other `autotools' memebers, in particular `M4sh'
+# alignment.
+#
+# Currently I have limited `autom4te' usage strictly to `M4sugar', to avoid
+# porting the large body of existing code into `M4sh' diversions - and to avoid
+# complications in emitting wrapper scripts and trading slower more portable
+# idioms for existing patterns.
+#
+# Process with :
+#   autom4te                            \
+#     -l M4sugar                        \
+#     -I${srcdir}/m4/ltmain-parts       \
+#     ${srcdir}/build-aux/ltmain.in.m4  \
+#     > ${srcdir}/build-aux/ltmain.in;
+#
+# I have tried to track down the necessary places where this change needs to
+# be handled ( for example `Makefile.am', `bootstrap', and `libtoolize.in' ),
+# but I have almost certainly missed things.
+# If you see something say something.
 #
 #
 # ---------------------------------------------------------------------------- #
