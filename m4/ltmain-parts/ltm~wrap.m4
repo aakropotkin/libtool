@@ -93,7 +93,7 @@ func_ltwrapper_scriptname $1
 # _LTM_WRAP_FN_WRAPPER_P_PREPARE
 # ------------------------------
 m4_defun_once([_LTM_WRAP_FN_WRAPPER_P_PREPARE],
-[
+[m4_require([_LTM_WRAP_FN_EXECUTABLE_P_PREPARE])
 # func_ltwrapper_p file
 # True iff FILE is a libtool wrapper script or wrapper executable
 # This function is only a basic sanity check; it will hardly flush out
