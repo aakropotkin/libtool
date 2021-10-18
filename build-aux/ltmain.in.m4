@@ -13,6 +13,7 @@ m4_include([ltm~version.m4])
 m4_include([ltm~opts.m4])
 m4_include([ltm~files.m4])
 m4_include([ltm~tags.m4])
+m4_include([ltm~wrap.m4])
 m4_divert_push([])dnl
 #! /usr/bin/env sh
 
@@ -90,6 +91,7 @@ LTM_TAGS_INIT
 LTM_VER_INIT
 dnl Define option parsing helpers, and trigger processing of options
 LTM_PROCESS_OPTS
+LTM_WRAP_INIT
 
 
 ## ----------- ##
@@ -107,87 +109,6 @@ extracted_serial=0
 # will be execed at the end.  This prevents here-documents from being
 # left over by shells.
 exec_cmd=
-
-# func_ltwrapper_script_p file
-# True iff FILE is a libtool wrapper script
-# This function is only a basic sanity check; it will hardly flush out
-# determined imposters.
-func_ltwrapper_script_p ()
-{
-    test -f "$1" &&  \
-      $lt_truncate_bin < "$1" 2>/dev/null | func_generated_by_libtool_p
-}
-
-# func_ltwrapper_executable_p file
-# True iff FILE is a libtool wrapper executable
-# This function is only a basic sanity check; it will hardly flush out
-# determined imposters.
-func_ltwrapper_executable_p ()
-{
-    func_ltwrapper_exec_suffix=
-    case $1 in
-    *.exe) ;;
-    *) func_ltwrapper_exec_suffix=.exe ;;
-    esac
-    $GREP "$magic_exe" "$1$func_ltwrapper_exec_suffix" >/dev/null 2>&1
-}
-
-# func_ltwrapper_scriptname file
-# Assumes file is an ltwrapper_executable
-# uses $file to determine the appropriate filename for a
-# temporary ltwrapper_script.
-func_ltwrapper_scriptname ()
-{
-    func_dirname_and_basename "$1" "" "."
-    func_stripname '' '.exe' "$func_basename_result"
-    func_ltwrapper_scriptname_result=$func_dirname_result/$objdir/${func_stripname_result}_ltshwrapper
-}
-
-# func_ltwrapper_p file
-# True iff FILE is a libtool wrapper script or wrapper executable
-# This function is only a basic sanity check; it will hardly flush out
-# determined imposters.
-func_ltwrapper_p ()
-{
-    func_ltwrapper_script_p "$1" || func_ltwrapper_executable_p "$1"
-}
-
-
-# func_execute_cmds commands fail_cmd
-# Execute tilde-delimited COMMANDS.
-# If FAIL_CMD is given, eval that upon failure.
-# FAIL_CMD may read-access the current command in variable CMD!
-func_execute_cmds ()
-{
-    $debug_cmd
-
-    save_ifs=$IFS; IFS='~'
-    for cmd in $1; do
-      IFS=$sp$nl
-      eval cmd=\"$cmd\"
-      IFS=$save_ifs
-      func_show_eval "$cmd" "${2-:}"
-    done
-    IFS=$save_ifs
-}
-
-
-# func_source file
-# Source FILE, adding directory component if necessary.
-# Note that it is not necessary on cygwin/mingw to append a dot to
-# FILE even if both FILE and FILE.exe exist: automatic-append-.exe
-# behavior happens only for exec(3), not for open(2)!  Also, sourcing
-# 'FILE.' does not work on cygwin managed mounts.
-func_source ()
-{
-    $debug_cmd
-
-    case $1 in
-    */* | *\\*)	. "$1" ;;
-    *)		. "./$1" ;;
-    esac
-}
-
 
 # func_resolve_sysroot PATH
 # Replace a leading = in PATH with a sysroot.  Store the result into
@@ -998,7 +919,7 @@ func_mode_compile ()
 
     func_quote_arg pretty "$libobj"
     test "X$libobj" != "X$func_quote_arg_result" \
-      && $ECHO "X$libobj" | $GREP '[[]]~#^*{};<>?"'"'"'	 &()|`$[[]]' \
+      && $ECHO "X$libobj" | $GREP '[[]]~#^*{};<>?"'"'"'	 &()|`$[]' \
       && func_warning "libobj name '$libobj' may not contain shell special characters."
     func_dirname_and_basename "$obj" "/" ""
     objname=$func_basename_result

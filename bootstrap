@@ -3185,6 +3185,8 @@ func_libtoolize ()
       $opt_verbose || func_append _G_libtoolize_options " --quiet"
       func_show_eval "$LIBTOOLIZE$_G_libtoolize_options" 'exit $?'
     }
+  $AUTOM4TE -l m4sugar -I$macro_dir/ltmain-parts $build_aux/ltmain.in.m4  \
+    > $build_aux/ltmain.in
 }
 
 

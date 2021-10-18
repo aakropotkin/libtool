@@ -161,6 +161,7 @@ $(ltmain_in): $(ltmain_m4dir)/ltm~version.m4
 $(ltmain_in): $(ltmain_m4dir)/ltm~opts.m4
 $(ltmain_in): $(ltmain_m4dir)/ltm~files.m4
 $(ltmain_in): $(ltmain_m4dir)/ltm~tags.m4
+$(ltmain_in): $(ltmain_m4dir)/ltm~wrap.m4
 $(ltmain_in): $(ltmain_in_m4)
 	$(AUTOM4TE) -l m4sugar -I$(ltmain_m4dir) $(ltmain_in_m4) > $@
 
